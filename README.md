@@ -75,6 +75,22 @@ Each `steps/*/test.py` starts the server with `--port 0`, reads the port it
 printed, talks to it over a socket, and asserts on what came back. No mocking:
 the tests use the same bytes a client would.
 
+Without `openssl` the four TLS chapters cannot run. They exit 77, `check.py`
+prints `SKIP` for them, and the summary reports the skips instead of counting
+them as passes:
+
+```console
+$ python tools/check.py
+...
+SKIP  17-tls-handshake  (0.0s)
+      skipped: no certificates (run tools/make_cert.py)
+...
+16/20 steps pass, 4 skipped
+```
+
+`python tools/test_check.py` covers the summary logic itself. CI runs both on
+Python 3.8, 3.11, and 3.13.
+
 ## What this is not
 
 - Not a production server. No timeouts, no connection limits, no logging worth

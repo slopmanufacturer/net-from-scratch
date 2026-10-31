@@ -12,7 +12,7 @@ from testkit import start_server, stop
 CERTS = ROOT / ".certs"
 if not (CERTS / "server.pem").exists():
     print("skipped: no certificates (run tools/make_cert.py)")
-    raise SystemExit(0)
+    raise SystemExit(77)
 
 proc, port = start_server(HERE / "tls_server.py")
 try:
