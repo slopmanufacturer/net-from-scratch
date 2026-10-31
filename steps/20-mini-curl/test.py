@@ -67,5 +67,8 @@ if (CERTS / "server.pem").exists():
         redirect.shutdown()
     finally:
         stop(target)
+else:
+    print("skipped the HTTPS half: no certificates (run tools/make_cert.py)")
+    raise SystemExit(77)
 
 print("ok")
